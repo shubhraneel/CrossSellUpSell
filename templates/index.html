@@ -6,13 +6,13 @@
 
 {% block body %}
 <div class="form-center">
-  <form action="/" method="post">
+  <form action="/recommendations" method="post">
     <div class="mb-4">
       <label for="wholesaler" class="form-label form-lg-label">Choose the Wholesaler</label>
       <select class="form-control form-lg-control" name="wholesaler" id="wholesaler">
-        <option value="29037">29037</option>
-        <option value="29038">29038</option>
-        <option value="29039">29039</option>
+        {% for material in materials %}
+          <option value="{{ material }}">{{ material }}</option>
+        {% endfor %}
       </select>
     </div>
     <input class="btn btn-success" type="submit" value="Get Recommendations">
