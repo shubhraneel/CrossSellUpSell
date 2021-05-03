@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<h2 class="recommendation-header">
+  Recommendations for wholesaler {{ wholesaler }}
+</h2>
+{% for material in materials %}
+<div class="recommendation-card">
+  <div class="recommendation-left">
+    <p class="recommendation-material">{{material}}</p>
+  </div>
+  <div class="recommendation-right">
+    <a href="#"><button class="btn btn-warning recommendation-button">Order</button></a>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -64,7 +64,7 @@ num_materials = len(np.unique(np.array(list(mudi.keys()))))
 M = RecommenderNet(num_wholesalers, num_materials, EMBEDDING_SIZE)
 M.load_weights("models/material_recommed")
 
-def predict(wholesaler_id):
+def predict(wholesaler_id, k=5):
 
   one_user_wholesaler=[]
   wholesaler_id_transformed = wudi[wholesaler_id]
@@ -81,10 +81,8 @@ def predict(wholesaler_id):
   key_list_1 = list(mudi.keys())
   val_list_1 = list(mudi.values())
 
-  preds=[]
-  for i in range(len(one_user)):
-      preds.append([float(M.predict(np.asarray([one_user.iloc[i]]))[0]), key_list_1[val_list_1.index(one_user['material'][i])]]) 
-  preds = np.array(preds)
-  indices = np.argsort(preds[:, 0])
+  preds = M.predict(np.array(one_user))
+  preds = np.squeeze(preds)
+  top_k = [key_list_1[val_list_1.index(x)] for x in np.argsort(preds)[-k:][::-1]]
 
-  return preds[indices[-5:]][:, 1]
+  return top_k

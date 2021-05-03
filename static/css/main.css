@@ -43,3 +43,34 @@ body {
   font-size: 1.5rem;
   padding: 1rem;
 }
+
+.recommendation-header {
+  text-align: center;
+  margin: 4rem;
+}
+
+.recommendation-card {
+  margin: 1rem auto;
+  width: 30%;
+  border-radius: 7px;
+  background-color: #e7b8f5;
+  font-size: 1.5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 1px 1px 3px 1px #555;
+}
+
+.recommendation-button {
+  box-shadow: 1px 1px 3px 1px #555;
+}
+
+.recommendation-button:hover {
+  transform: translate(0, -1px);
+  box-shadow: 2px 2px 7px 2px #555;
+}
+
+.recommendation-button:active {
+  transform: translate(0, 1px);
+  box-shadow: 0 0 2px 1px #555;
+}

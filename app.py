@@ -15,7 +15,7 @@ def recommendations():
 
 @app.route('/recommendations/<wholesaler_id>')
 def recommendations_wholesaler(wholesaler_id):
-  return str(predict(int(wholesaler_id)))
+  return render_template('recommendations.html', wholesaler=wholesaler_id, materials=predict(int(wholesaler_id)))
 
 if __name__ == '__main__':
   app.run(debug=True)
