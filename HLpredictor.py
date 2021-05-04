@@ -25,7 +25,14 @@ model.load_weights("models/HLpred")
 
 def predict_HL(wholesaler, material):
   data_new = data[data["Wholesaler"] == wholesaler]
-  row = (data_new[data_new["Material"] == material]).iloc[0]
+  row = (data_new[data_new["Material"] == material])
+  if len(row) == 0:
+    list_of_HL = list((data[data["Material"] == material]["HLs"]).apply(eval))
+    list_HL = []
+    for list_of in list_of_HL:
+      list_HL += list_of
+    return np.average(list_HL)
+  row = row.iloc[0]
   HLs = eval(row["HLs"])
   date_diffs = eval(row["Date Difference"])
   last_order_date = pd.to_datetime(row["Dates"].split("'")[-2])
