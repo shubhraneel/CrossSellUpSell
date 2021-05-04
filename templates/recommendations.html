@@ -8,10 +8,11 @@
 <h2 class="recommendation-header">
   Recommendations for wholesaler {{ wholesaler }}
 </h2>
-{% for material in materials %}
+{% for material, quantity in materials_quantities %}
 <div class="recommendation-card">
   <div class="recommendation-left">
     <p class="recommendation-material">{{material}}</p>
+    <p class="recommendation-quantity">Quantity Recommended: {{quantity}} hL</p>
   </div>
   <div class="recommendation-right">
     <a href="#"><button class="btn btn-warning recommendation-button">Order</button></a>

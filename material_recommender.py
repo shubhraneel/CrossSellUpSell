@@ -64,7 +64,7 @@ num_materials = len(np.unique(np.array(list(mudi.keys()))))
 M = RecommenderNet(num_wholesalers, num_materials, EMBEDDING_SIZE)
 M.load_weights("models/material_recommed")
 
-def predict(wholesaler_id, k=5):
+def predict_material(wholesaler_id, k=5):
 
   one_user_wholesaler=[]
   wholesaler_id_transformed = wudi[wholesaler_id]

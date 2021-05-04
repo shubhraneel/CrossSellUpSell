@@ -74,3 +74,8 @@ body {
   transform: translate(0, 1px);
   box-shadow: 0 0 2px 1px #555;
 }
+
+.recommendation-quantity {
+  font-size: 1rem;
+  color: rgb(95, 6, 101);
+}
