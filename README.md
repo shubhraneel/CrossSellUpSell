@@ -2,8 +2,27 @@
 
 ## Running Instructions
 
-1. Install requirements
-   `pip install`
-2. Start the server
-   `python app.py`
-3. Open [localhost:5000](localhost:5000) in a browser
+1. Start virtual environment
+
+   ```bash
+   python3 -m venv env
+   ```
+
+2. Install requirements
+
+   ```bash
+   pip install
+   ```
+
+3. Start the server
+
+   ```bash
+   python3 app.py
+   ```
+
+4. Open [localhost:5000](http://localhost:5000) in a browser
+
+## Local Requirements
+
+* Python 3.85 or above
+* pip
