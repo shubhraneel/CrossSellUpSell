@@ -5,19 +5,41 @@
 {% endblock %}
 
 {% block body %}
+
+<div class="order_block">
+  <div id="orders">
+
+  </div>
+  <button class="btn btn-warning" onclick="handleOrder('{{wholesaler}}')">Order</button>
+</div>
+<form onsubmit="submitForm(event)">
+  <select class="form-control form-lg-control" name="material" id="material">
+    {% for material in all_materials %}
+      <option value="{{ material }}">{{ material }}</option>
+    {% endfor %}
+  </select>
+  <input type="number" name="quantity" id="quantity" step="any" min="0.00001">
+  <input class="btn btn-success" type="submit" value="Add to Cart">
+</form>
 <h2 class="recommendation-header">
   Recommendations for wholesaler {{ wholesaler }}
 </h2>
 {% for material, quantity in materials_quantities %}
-<div class="recommendation-card">
-  <div class="recommendation-left">
-    <p class="recommendation-material">{{material}}</p>
-    <p class="recommendation-quantity">Quantity Recommended: {{quantity}} hL</p>
+
+  <div class="recommendation-card">
+    <div class="recommendation-left">
+      <p class="recommendation-material">{{material}}</p>
+      <p class="recommendation-quantity">Quantity Recommended: {{quantity}} hL</p>
+    </div>
+    <div class="recommendation-right">
+      <form onsubmit="submitForm(event)">
+        <input type="hidden" name="material" value="{{material}}">
+        <input type="number" name="quantity">
+        <input type="submit" class="btn btn-warning recommendation-button" value="Add to Cart">
+      </form>
+    </div>
   </div>
-  <div class="recommendation-right">
-    <a href="#"><button class="btn btn-warning recommendation-button">Order</button></a>
-  </div>
-</div>
+
 {% endfor %}
 
 {% endblock %}

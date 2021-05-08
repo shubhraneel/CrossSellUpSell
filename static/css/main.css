@@ -79,3 +79,15 @@ body {
   font-size: 1rem;
   color: rgb(95, 6, 101);
 }
+
+.order-list-element {
+  width: 40rem;
+  background-color:rgb(95, 6, 101);
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  font-size: 1.5rem;
+  margin: 1rem;
+}
