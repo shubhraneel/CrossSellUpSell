@@ -17,7 +17,7 @@ def cross_up(ordered_materials, preds, material_pred_dict):
   for i in cross_sell:
     cross_sell_dict[i]=material_pred_dict[i]   ###   ENTER PREDICTED QUANTITIES FROM MODEL    ###
     if(cross_sell_dict[i]>0.1*total_HL_ordered):
-      cross_sell_dict[i]=0.1*total_HL_ordered
+      cross_sell_dict[i]=round(0.1*total_HL_ordered, 2)
 
   max_HL_per_day=500
   min_HL_per_day=50
@@ -26,7 +26,7 @@ def cross_up(ordered_materials, preds, material_pred_dict):
   upsell_quantities={}
   tot_upsell_quanity=0
   for i in ordered_materials:
-    upsell_quantities[i]=0.1*ordered_materials[i]
+    upsell_quantities[i]=round(0.1*ordered_materials[i], 2)
     tot_upsell_quanity=tot_upsell_quanity+upsell_quantities[i]
 
   HL_plus_upsell=total_HL_ordered + tot_upsell_quanity
@@ -37,11 +37,13 @@ def cross_up(ordered_materials, preds, material_pred_dict):
     dis=15.0
   elif (HL_plus_upsell>min_HL_per_day) & (HL_plus_upsell<=max_HL_per_day):
     dis=5.0+ (15-5)*HL_plus_upsell/(500-50)
+
+  dis = round(dis, 2)
   
   ###   CROSS SELL DISCOUNT  ###
   base_dis=2.5
   cross_sell_discounts=[]
   for i in range(len(cross_sell_dict)):
-    cross_sell_discounts.append(base_dis+i*base_dis)
+    cross_sell_discounts.append(round(base_dis+i*base_dis, 2))
   
   return cross_sell_dict, cross_sell_discounts, upsell_quantities, dis

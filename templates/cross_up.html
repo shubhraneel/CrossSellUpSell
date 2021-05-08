@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<div class="order_block">
+  <div id="orders">
+
+  </div>
+  <button class="btn btn-warning" onclick="handleOrder2('{{wholesaler}}')">Order</button>
+</div>
+<div class="upsell-block">
+  Buy more of these with the given discounts
+  {% for upsell, quantity in upsell_quantities %}
+  <form class="upsell-form" onsubmit="submitForm(event)">
+    <input type="hidden" name="material" value="{{upsell}}">
+    <input type="hidden" name="quantity" value="{{quantity}}">
+  </form>
+  <div class="upsell">
+    <div class="upsell-material">
+      {{ upsell }}
+    </div>
+    <div class="upsell-quantity">
+      {{ quantity }} hL
+    </div>
+  </div>
+  {% endfor %}
+  <div class="upsell-discount">
+    Discount if bought together: {{ upsell_discount }}%
+  </div>
+  <button class="btn btn-warning" onclick="handleUpsell(event)">Add to cart</button>
+</div>
+<div class="cross-sell-block">
+  {% for cross_sell, quantity in cross_sell_quantities %}
+  <div class="cross-sell">
+    <div class="cross-sell-material">
+      {{ cross_sell }}
+    </div>
+    <div class="cross-sell-quantity">
+      {{ quantity }} hL
+    </div>
+    <form onsubmit="submitForm(event)">
+      <input type="hidden" name="material" value="{{cross_sell}}">
+      <input type="hidden" name="quantity" value="{{quantity}}">
+      <input class="btn btn-success" type="submit" value="Add to Cart">
+    </form>
+  </div>
+  {% endfor %}
+  {% for discount in cross_sell_discounts %}
+  <div class="upsell-discount">
+    If you buy {{ loop.index }} items you will get {{ discount }}% discount on whole order
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

@@ -91,3 +91,39 @@ body {
   font-size: 1.5rem;
   margin: 1rem;
 }
+
+.upsell-block {
+  padding: 1rem;
+  width: 40rem;
+  margin: 2rem auto;
+  border-radius: 5px;
+  background-color: #e7b8f5;
+  font-size: 1.25rem;
+}
+
+.upsell {
+  display: flex;
+  margin: 1rem;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #fce38a;
+  border-radius: 5px;
+}
+
+.cross-sell-block {
+  padding: 1rem;
+  width: 40rem;
+  margin: 2rem auto;
+  border-radius: 5px;
+  background-color: #e7b8f5;
+  font-size: 1.25rem;
+}
+
+.cross-sell {
+  display: flex;
+  margin: 1rem;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #fce38a;
+  border-radius: 5px;
+}

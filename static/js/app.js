@@ -44,6 +44,29 @@ function handleOrder(wholesaler, preds, material_pred_dict) {
       'Content-Type': 'application/json'
     },
   }).then(res => {
-    console.log("Request complete! response:", res);
+    window.location.href = res.url
   });  
+}
+
+function handleOrder2(wholesaler) {
+  data = {
+    "wholesaler": wholesaler,
+    "cart": cart,
+  }
+  fetch("/order_2", {
+    method: "POST", 
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  }).then(res => {
+    window.location.href = res.url
+  });
+}
+
+function handleUpsell(event) {
+  elements = Array.from(document.getElementsByClassName('upsell-form'))
+  elements.forEach(e => {
+    e.dispatchEvent(new Event('submit'))
+  })
 }
