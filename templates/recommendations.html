@@ -10,7 +10,7 @@
   <div id="orders">
 
   </div>
-  <button class="btn btn-warning" onclick="handleOrder('{{wholesaler}}')">Order</button>
+  <button class="btn btn-warning" onclick="handleOrder('{{wholesaler}}', '{{preds}}', '{{material_pred_dict}}')">Order</button>
 </div>
 <form onsubmit="submitForm(event)">
   <select class="form-control form-lg-control" name="material" id="material">
@@ -34,7 +34,7 @@
     <div class="recommendation-right">
       <form onsubmit="submitForm(event)">
         <input type="hidden" name="material" value="{{material}}">
-        <input type="number" name="quantity">
+        <input type="number" name="quantity" step="any" min="0.00001">
         <input type="submit" class="btn btn-warning recommendation-button" value="Add to Cart">
       </form>
     </div>

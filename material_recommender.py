@@ -85,6 +85,8 @@ def predict_material(wholesaler_id, k=10):
 
   preds = M.predict(np.array(one_user))
   preds = np.squeeze(preds)
-  top_k = [key_list_1[val_list_1.index(x)] for x in np.argsort(preds)[-k:][::-1]]
+  sort_ids = np.argsort(preds)[-k:][::-1]
+  top_k = [key_list_1[val_list_1.index(x)] for x in sort_ids]
+  preds = {key_list_1[val_list_1.index(x)]: float(preds[x]) for x in sort_ids}
 
-  return top_k
+  return top_k, preds

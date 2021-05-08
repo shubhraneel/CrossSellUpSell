@@ -30,10 +30,12 @@ function submitForm(event) {
   add_to_cart(event.target.elements.material.value, event.target.elements.quantity.value);
 }
 
-function handleOrder(wholesaler) {
+function handleOrder(wholesaler, preds, material_pred_dict) {
   data = {
     "wholesaler": wholesaler,
     "cart": cart,
+    "preds": preds,
+    "material_pred_dict": material_pred_dict
   }
   fetch("/order", {
     method: "POST", 
