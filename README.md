@@ -26,3 +26,7 @@
 
 * Python 3.8
 * pip
+
+## Warnings
+
+If the Flask app does not work, run the notebooks in the folder
