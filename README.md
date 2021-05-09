@@ -8,13 +8,25 @@
    python3 -m venv env
    ```
 
-2. Install requirements
+2. Activate environment
+
+   ```bash
+   source env/bin/activate
+   ```
+
+   Or
+
+   ```bash
+   .\env\Scripts\activate
+   ```
+
+3. Install requirements
 
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Start the server
+4. Start the server
 
    ```bash
    python3 app.py
