@@ -186,6 +186,6 @@ def model_feedback(wh, materials, HL_ordered):
         + [(today - d_HL["Dates"][x[0]][-2]).days, 1]
     else:
       ap = {"Wholesaler": wh, "Material": material, "Dates": [today],
-            "HLs": [HL_ordered], "Date Difference": [1]}
+            "HLs": [HL_ordered[i]], "Date Difference": [1]}
       d_HL = d_HL.append(ap, ignore_index=True)
   d_HL.to_csv('data/HLWholesalerMaterialPair.csv', index=False)
