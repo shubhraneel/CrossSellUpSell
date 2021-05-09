@@ -1,4 +1,8 @@
-def cross_up(ordered_materials, preds, material_pred_dict):
+import pandas as pd
+import numpy as np
+from collections import Counter
+
+def cross_up(ordered_materials, preds, material_pred_dict, wh):
   total_HL_ordered=0
   for i in ordered_materials:
     total_HL_ordered = total_HL_ordered + ordered_materials[i]
@@ -46,4 +50,52 @@ def cross_up(ordered_materials, preds, material_pred_dict):
   for i in range(len(cross_sell_dict)):
     cross_sell_discounts.append(round(base_dis+i*base_dis, 2))
   
-  return cross_sell_dict, cross_sell_discounts, upsell_quantities, dis
+  ### PEOPLE NEAR YOU ALSO BOUGHT ###
+  latest_date = None
+  wh = int(wh)
+
+  dist = pd.read_csv("data/sorted_user_to_user_distance.csv")
+  dist["Distance_in_miles"] = dist["Distance_in_miles"].apply(eval)
+  dist = dist.set_index("Wholesaler")
+
+  dfg = pd.read_csv("data/WholesalerDatewise.csv")
+  dfg["HLs"] = dfg["HLs"].apply(eval)
+  dfg["Materials"] = dfg["Materials"].apply(eval)
+
+  u = (np.array(dist.loc[wh][0])).astype(int)
+  L = len(u[u<30]) #change 30 here for 
+
+  if latest_date is None:
+    #Can change it to today
+    latest_date = sorted(dfg[dfg['Wholesaler'] == wh]["Date"].unique())[-1]
+
+  valid_date = str(np.datetime64(latest_date) - 60) #change 60 here for time period in days
+
+
+  materials_bought=[]
+  for nearby_users in u[1:L]:
+    print(nearby_users[1])
+    d = dfg[dfg['Wholesaler'] == nearby_users[1]]
+
+    x = d[(d["Date"]<latest_date) & (d["Date"]>valid_date)]
+
+    for i in range(len(x)):
+      materials_bought+=x['Materials'].iloc[i]
+  
+  if len(materials_bought) > 0:
+    a = dict(Counter(materials_bought))
+    tp = [(a[i], i) for i in a]
+    tp = sorted(tp, reverse=True)
+    out = (tp)
+  else:
+    out = []
+
+
+  ############## GROUPMENT BASED PREDICTIONS ###############
+  group_users=pd.read_csv('data/group_users.csv')
+  group_top_materials=pd.read_csv('data/group_top_materials.csv')
+
+  grp_of_user=group_users[str(wh)][0]
+  top_materials_of_grp=group_top_materials[grp_of_user][:5]
+  
+  return cross_sell_dict, cross_sell_discounts, upsell_quantities, dis, out[:5], list(top_materials_of_grp)

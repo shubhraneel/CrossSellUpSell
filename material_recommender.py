@@ -89,4 +89,6 @@ def predict_material(wholesaler_id, k=10):
   top_k = [key_list_1[val_list_1.index(x)] for x in sort_ids]
   preds = {key_list_1[val_list_1.index(x)]: float(preds[x]) for x in sort_ids}
 
+  print(preds)
+
   return top_k, preds

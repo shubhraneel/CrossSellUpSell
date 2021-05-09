@@ -33,8 +33,11 @@ def recommendations_wholesaler(wholesaler_id):
 @app.route('/order', methods=['POST'])
 def order_materials():
   data = json.loads(request.data)
-  cross_sell_dict, cross_sell_discounts, upsell_quantities, upsell_dis = cross_up(
-    {key: float(value) for key, value in data["cart"].items()}, json.loads(data["preds"]), json.loads(data["material_pred_dict"])
+  cross_sell_dict, cross_sell_discounts, upsell_quantities, upsell_dis, near_deals, groupment_preds = cross_up(
+    {key: float(value) for key, value in data["cart"].items()}, 
+    json.loads(data["preds"]), 
+    json.loads(data["material_pred_dict"]),
+    data["wholesaler"]
     )
   model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()])
   return redirect(url_for('crossup', 
@@ -42,7 +45,9 @@ def order_materials():
       cross_sell_dict=cross_sell_dict, 
       cross_sell_discounts=str(cross_sell_discounts),
       upsell_quantities=upsell_quantities,
-      upsell_discount=upsell_dis
+      upsell_discount=upsell_dis,
+      near_deals=str(near_deals),
+      groupment_preds=str(groupment_preds)
       ))
 
 @app.route("/crossup/<wholesaler_id>")
@@ -53,7 +58,9 @@ def crossup(wholesaler_id):
     cross_sell_quantities = eval(request.args["cross_sell_dict"]).items(),
     cross_sell_discounts = eval(request.args["cross_sell_discounts"]),
     upsell_quantities = eval(request.args["upsell_quantities"]).items(),
-    upsell_discount = float(request.args["upsell_discount"])
+    upsell_discount = float(request.args["upsell_discount"]),
+    near_deals=eval(request.args["near_deals"]),
+    groupment_preds=eval(request.args["groupment_preds"])
     )
 
 @app.route("/order_2", methods=["POST"])

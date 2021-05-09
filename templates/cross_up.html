@@ -55,4 +55,36 @@
   {% endfor %}
 </div>
 
+<h2>People near you also bought these</h2>
+{% for _, material in near_deals %}
+<div class="recommendation-card">
+  <div class="recommendation-left">
+    <p class="recommendation-material">{{material}}</p>
+  </div>
+  <div class="recommendation-right">
+    <form onsubmit="submitForm(event)">
+      <input type="hidden" name="material" value="{{material}}">
+      <input type="number" name="quantity" step="any" min="0.00001">
+      <input type="submit" class="btn btn-warning recommendation-button" value="Add to Cart">
+    </form>
+  </div>
+</div>
+{% endfor %}
+
+<h2>People in your Groupment also bought these</h2>
+{% for material in groupment_preds %}
+<div class="recommendation-card">
+  <div class="recommendation-left">
+    <p class="recommendation-material">{{material}}</p>
+  </div>
+  <div class="recommendation-right">
+    <form onsubmit="submitForm(event)">
+      <input type="hidden" name="material" value="{{material}}">
+      <input type="number" name="quantity" step="any" min="0.00001">
+      <input type="submit" class="btn btn-warning recommendation-button" value="Add to Cart">
+    </form>
+  </div>
+</div>
+{% endfor %}
+
 {% endblock %}

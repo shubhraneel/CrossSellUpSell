@@ -23,15 +23,26 @@ def return_model():
 model = return_model()
 model.load_weights("models/HLpred")
 
+nearest_users = pd.read_csv("data/sorted_user_to_user_distance.csv", index_col=0)
+
 def predict_HL(wholesaler, material):
   data_new = data[data["Wholesaler"] == wholesaler]
   row = (data_new[data_new["Material"] == material])
   if len(row) == 0:
-    list_of_HL = list((data[data["Material"] == material]["HLs"]).apply(eval))
-    list_HL = []
-    for list_of in list_of_HL:
-      list_HL += list_of
-    return np.average(list_HL)
+    distances = eval(nearest_users.loc[wholesaler]["Distance_in_miles"])
+    flag = 0
+    for distance, user in distances:
+      row = data[(data["Wholesaler"] == user) & (data["Material"] == material)]
+      if len(row) > 0:
+        flag = 1
+        break
+    if flag == 0:
+      return 4.2
+    # list_of_HL = list((data[data["Material"] == material]["HLs"]).apply(eval))
+    # list_HL = []
+    # for list_of in list_of_HL:
+    #   list_HL += list_of
+    # return np.average(list_HL)
   row = row.iloc[0]
   HLs = eval(row["HLs"])
   date_diffs = eval(row["Date Difference"])
