@@ -11,7 +11,7 @@
 2. Install requirements
 
    ```bash
-   pip install
+   pip install -r requirements.txt
    ```
 
 3. Start the server
