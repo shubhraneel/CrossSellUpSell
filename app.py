@@ -74,6 +74,7 @@ def order_2():
 def add_new_user():
   if request.method == "POST":
     add_new(request.form)
+    return redirect(url_for('index'))
   return render_template("new_user.html")
 
 if __name__ == '__main__':

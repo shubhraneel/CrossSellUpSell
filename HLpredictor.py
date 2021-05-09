@@ -8,7 +8,7 @@ from tensorflow.keras import backend as K
 from tensorflow.keras.optimizers import Adam
 import pickle
 
-data = pd.read_csv("data/HLWholesalerMaterialPair.csv")
+
 with open("data/HL_scaler.pkl", "rb") as f:
   scaler = pickle.load(f)
 
@@ -23,9 +23,9 @@ def return_model():
 model = return_model()
 model.load_weights("models/HLpred")
 
-nearest_users = pd.read_csv("data/sorted_user_to_user_distance.csv", index_col=0)
-
 def predict_HL(wholesaler, material):
+  data = pd.read_csv("data/HLWholesalerMaterialPair.csv")
+  nearest_users = pd.read_csv("data/sorted_user_to_user_distance.csv", index_col=0)
   data_new = data[data["Wholesaler"] == wholesaler]
   row = (data_new[data_new["Material"] == material])
   if len(row) == 0:

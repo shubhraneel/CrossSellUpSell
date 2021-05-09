@@ -64,5 +64,6 @@ def add_new(data):
   d3.to_csv("data/group_users.csv", index=False)
 
   bisect.insort(wholesalers, str(wh))
+  print(wholesalers)
   with open("data/wholesalers.json", "w+") as f:
     json.dump(wholesalers, f)
