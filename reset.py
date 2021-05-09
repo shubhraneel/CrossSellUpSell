@@ -50,3 +50,6 @@ def reset():
   M.load_weights("original_data/material_rec")
 
   M.save_weights("models/material_rec", save_format="tf")
+
+  with open("data/mar.json", "w+") as f:
+    json.dump([], f)

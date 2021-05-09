@@ -5,6 +5,7 @@ from cross_up import cross_up
 from model_feedback import model_feedback
 from add_new_user import add_new
 from reset import reset
+import numpy as np
 import json
 
 app = Flask(__name__)
@@ -54,6 +55,8 @@ def order_materials():
 
 @app.route("/crossup/<wholesaler_id>")
 def crossup(wholesaler_id):
+  with open("data/mar.json") as f:
+    mar = round(float(np.average(json.load(f))), 2)
   return render_template(
     'cross_up.html', 
     wholesaler = wholesaler_id,
@@ -62,7 +65,8 @@ def crossup(wholesaler_id):
     upsell_quantities = eval(request.args["upsell_quantities"]).items(),
     upsell_discount = float(request.args["upsell_discount"]),
     near_deals=eval(request.args["near_deals"]),
-    groupment_preds=eval(request.args["groupment_preds"])
+    groupment_preds=eval(request.args["groupment_preds"]),
+    mar=mar
     )
 
 @app.route("/order_2", methods=["POST"])

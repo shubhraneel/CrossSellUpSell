@@ -6,6 +6,12 @@ from MAR import calc_ark_one_user
 
 def cross_up(ordered_materials, preds, material_pred_dict, wh):
 
+  with open("data/mar.json") as f:
+    mars = json.load(f)
+  mars.append(calc_ark_one_user(preds.keys(), ordered_materials.keys()))
+  with open("data/mar.json", "w+") as f:
+    json.dump(mars, f)
+
   total_HL_ordered=0
   for i in ordered_materials:
     total_HL_ordered = total_HL_ordered + ordered_materials[i]
