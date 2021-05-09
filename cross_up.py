@@ -1,8 +1,11 @@
 import pandas as pd
 import numpy as np
 from collections import Counter
+import json
+from MAR import calc_ark_one_user
 
 def cross_up(ordered_materials, preds, material_pred_dict, wh):
+
   total_HL_ordered=0
   for i in ordered_materials:
     total_HL_ordered = total_HL_ordered + ordered_materials[i]

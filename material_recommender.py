@@ -102,4 +102,11 @@ def predict_material(wholesaler_id, k=10):
   top_k = [key_list_1[val_list_1.index(x)] for x in sort_ids]
   preds = {key_list_1[val_list_1.index(x)]: float(preds[x]) for x in sort_ids}
 
+  # with open("data/recommendations_orders.json") as f:
+  #   recs_orders_dict = json.load(f)
+  # if str(wholesaler_id) in recs_orders_dict:
+  #   recs_orders_dict[str(wholesaler_id)] = recs_orders_dict[str(wholesaler_id)] + top_k
+  # else:
+  #   recs_orders_dict[str(wholesaler_id)] = top_k
+
   return top_k, preds
