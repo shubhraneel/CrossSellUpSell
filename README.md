@@ -24,5 +24,5 @@
 
 ## Local Requirements
 
-* Python 3.85 or above
+* Python 3.8
 * pip
