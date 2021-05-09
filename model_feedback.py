@@ -177,10 +177,13 @@ def model_feedback(wh, materials, HL_ordered):
     if len(x) > 0:
       if d_HL["Dates"][x[0]][-1] == today:
         d_HL.at[x[0], "HLs"] = d_HL["HLs"][x[0]][:-1] + [d_HL["HLs"][x[0]][-1]+HL_ordered[i]]
-      d_HL.at[x[0], "HLs"] = d_HL["HLs"][x[0]] + [HL_ordered[i]]
-      d_HL.at[x[0], "Dates"] = d_HL["Dates"][x[0]] + [today]
-      d_HL.at[x[0], "Date Difference"] = d_HL["Date Difference"][x[0]][:-1] \
-      + [(today - d_HL["Date Difference"][x[0]][-1]).days, 1]
+      else:
+        d_HL.at[x[0], "HLs"] = d_HL["HLs"][x[0]] + [HL_ordered[i]]
+        d_HL.at[x[0], "Dates"] = d_HL["Dates"][x[0]] + [today]
+        # print(f"Today: {today}")
+        # print(f"Date: {d_HL['Dates'][x[0]][-1]}")
+        d_HL.at[x[0], "Date Difference"] = d_HL["Date Difference"][x[0]][:-1] \
+        + [(today - d_HL["Dates"][x[0]][-2]).days, 1]
     else:
       ap = {"Wholesaler": wh, "Material": material, "Dates": [today],
             "HLs": [HL_ordered], "Date Difference": [1]}

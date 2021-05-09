@@ -132,3 +132,34 @@ body {
   width: 60%;
   margin: 2rem auto;
 }
+
+.order-block {
+  width: 60rem;
+  margin: auto;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 2px solid rgb(95, 6, 101)
+}
+
+.order-heading {
+  text-align: center;
+  border-bottom: 2px solid rgb(95, 6, 101);
+}
+
+.recommendation-form {
+  width: 10rem;
+}
+
+.recommendation-form input {
+  width: 100%;
+}
+
+.rec-heading {
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.recommendation-form-top {
+  width: 60%;
+  margin: 4rem auto;
+}

@@ -40,7 +40,7 @@ def order_materials():
     json.loads(data["material_pred_dict"]),
     data["wholesaler"]
     )
-  model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()])
+  model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()], [float(x) for x in data["cart"].values()])
   return redirect(url_for('crossup', 
       wholesaler_id=data["wholesaler"],
       cross_sell_dict=cross_sell_dict, 
@@ -67,7 +67,7 @@ def crossup(wholesaler_id):
 @app.route("/order_2", methods=["POST"])
 def order_2():
   data = json.loads(request.data)
-  model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()], [int(x) for x in data["cart"].values()])
+  model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()], [float(x) for x in data["cart"].values()])
   return redirect(url_for('index'))
 
 @app.route("/add_new_user", methods=["GET", "POST"])

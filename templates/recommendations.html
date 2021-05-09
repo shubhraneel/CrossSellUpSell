@@ -6,18 +6,23 @@
 
 {% block body %}
 
-<div class="order_block">
+<div class="order-block">
+  <h2 class="order-heading">
+    Cart
+  </h2>
   <div id="orders">
 
   </div>
   <button class="btn btn-warning" onclick="handleOrder('{{wholesaler}}', '{{preds}}', '{{material_pred_dict}}')">Order</button>
 </div>
-<form onsubmit="submitForm(event)">
+<form onsubmit="submitForm(event)" class="recommendation-form-top">
+  <label class="form-label lead" for="material">Material</label>
   <select class="form-control form-lg-control" name="material" id="material">
     {% for material in all_materials %}
       <option value="{{ material }}">{{ material }}</option>
     {% endfor %}
   </select>
+  <label class="form-label lead" for="quantity">Quantity</label>
   <input type="number" name="quantity" id="quantity" step="any" min="0.00001">
   <input class="btn btn-success" type="submit" value="Add to Cart">
 </form>
@@ -32,9 +37,9 @@
       <p class="recommendation-quantity">Quantity Recommended: {{quantity}} hL</p>
     </div>
     <div class="recommendation-right">
-      <form onsubmit="submitForm(event)">
+      <form onsubmit="submitForm(event)" class="recommendation-form">
         <input type="hidden" name="material" value="{{material}}">
-        <input type="number" name="quantity" step="any" min="0.00001">
+        <input type="number" name="quantity" step="any" min="0.00001" value="{{quantity}}">
         <input type="submit" class="btn btn-warning recommendation-button" value="Add to Cart">
       </form>
     </div>

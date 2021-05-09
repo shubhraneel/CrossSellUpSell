@@ -5,12 +5,20 @@
 {% endblock %}
 
 {% block body %}
-<div class="order_block">
+<div class="order-block">
+  <h2 class="order-heading">
+    Cart
+  </h2>
   <div id="orders">
 
   </div>
   <button class="btn btn-warning" onclick="handleOrder2('{{wholesaler}}')">Order</button>
 </div>
+
+<h2 class="recommendation-header">
+  Orders Placed. More Recommendations for wholesaler {{ wholesaler }}
+</h2>
+
 <div class="upsell-block">
   Buy more of these with the given discounts
   {% for upsell, quantity in upsell_quantities %}
@@ -55,14 +63,14 @@
   {% endfor %}
 </div>
 
-<h2>People near you also bought these</h2>
+<h2 class="rec-heading">People near you also bought these</h2>
 {% for _, material in near_deals %}
 <div class="recommendation-card">
   <div class="recommendation-left">
     <p class="recommendation-material">{{material}}</p>
   </div>
   <div class="recommendation-right">
-    <form onsubmit="submitForm(event)">
+    <form onsubmit="submitForm(event)" class="recommendation-form">
       <input type="hidden" name="material" value="{{material}}">
       <input type="number" name="quantity" step="any" min="0.00001">
       <input type="submit" class="btn btn-warning recommendation-button" value="Add to Cart">
@@ -71,14 +79,14 @@
 </div>
 {% endfor %}
 
-<h2>People in your Groupment also bought these</h2>
+<h2 class="rec-heading">People in your Groupment also bought these</h2>
 {% for material in groupment_preds %}
 <div class="recommendation-card">
   <div class="recommendation-left">
     <p class="recommendation-material">{{material}}</p>
   </div>
   <div class="recommendation-right">
-    <form onsubmit="submitForm(event)">
+    <form onsubmit="submitForm(event)" class="recommendation-form">
       <input type="hidden" name="material" value="{{material}}">
       <input type="number" name="quantity" step="any" min="0.00001">
       <input type="submit" class="btn btn-warning recommendation-button" value="Add to Cart">

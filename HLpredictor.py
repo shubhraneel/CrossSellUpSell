@@ -39,7 +39,8 @@ def predict_HL(wholesaler, material):
     if flag == 0:
       row = data[data["Material"] == material]
       if len(row) > 0:
-        return np.average(row["HLs"].apply(eval).apply(lambda x:x[0]))
+        value = np.average(row["HLs"].apply(eval).apply(lambda x:x[0]))
+        return (value if value > 0 else 4.2)  
       else:
         return 4.2
     # list_of_HL = list((data[data["Material"] == material]["HLs"]).apply(eval))
