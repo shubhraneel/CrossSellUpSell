@@ -42,3 +42,22 @@
 ## Warnings
 
 If the Flask app does not work, run the notebooks in the folder
+
+Disclaimer: Works with Python 3.8. TensorFlow faces version issue 
+when if tried in Python 3.9. Follow the steps in GitHub to run the application.
+
+## HEROKU APP
+
+Heroku App link: https://cross-sell-up-sell.herokuapp.com/
+
+The App deployed on Heroku might not work sometimes due to server issues. 
+Launching it after sometime is recommended, it something like that happens. 
+
+Do not try to input anything unusual in the application. It might crash. 
+For example, do not try to enter an existing user ID where the new user ID 
+has to be entered. This application only provides an user interface, 
+which is not the main objective of this task.
+
+If for any reason the application doesn’t run, run the .ipynb Notebooks 
+present in the Notebook folder of the GitHub repo. All the recommendations 
+(both materials and quantity) are printed in the notebooks.
