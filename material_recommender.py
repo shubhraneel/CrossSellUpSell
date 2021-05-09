@@ -10,6 +10,18 @@ import json
 
 # constants
 EMBEDDING_SIZE = 50
+POPULAR_BRANDS = {
+  11574: 1.0, 
+  10946: 1.0, 
+  3372: 1.0, 
+  9974: 1.0, 
+  19898: 1.0, 
+  3410: 1.0, 
+  10965: 1.0, 
+  59848: 1.0, 
+  11766: 1.0, 
+  20614: 1.0
+  }
 
 # model
 class RecommenderNet(keras.Model):
@@ -67,6 +79,9 @@ M.load_weights("models/material_rec")
 def predict_material(wholesaler_id, k=10):
 
   one_user_wholesaler=[]
+  if wholesaler_id not in wudi:
+    return POPULAR_BRANDS.keys(), POPULAR_BRANDS
+
   wholesaler_id_transformed = wudi[wholesaler_id]
   for i in range(num_materials):
       one_user_wholesaler.append(wholesaler_id_transformed)
@@ -78,8 +93,6 @@ def predict_material(wholesaler_id, k=10):
   one_user['material'] = one_user_material
   one_user["wholesaler"] = one_user_wholesaler
 
-  print(np.array(one_user))
-
   key_list_1 = list(mudi.keys())
   val_list_1 = list(mudi.values())
 
@@ -88,7 +101,5 @@ def predict_material(wholesaler_id, k=10):
   sort_ids = np.argsort(preds)[-k:][::-1]
   top_k = [key_list_1[val_list_1.index(x)] for x in sort_ids]
   preds = {key_list_1[val_list_1.index(x)]: float(preds[x]) for x in sort_ids}
-
-  print(preds)
 
   return top_k, preds

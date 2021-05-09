@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-  wholesalers = json.load(open('data/wudi.json'))
+  wholesalers = json.load(open('data/wholesalers.json'))
   return render_template('index.html', wholesalers=wholesalers)
 
 @app.route('/recommendations', methods=['POST'])
@@ -21,7 +21,7 @@ def recommendations():
 def recommendations_wholesaler(wholesaler_id):
   materials, preds = predict_material(int(wholesaler_id))
   quantities = [round(predict_HL(int(wholesaler_id), int(material_id)), 2) for material_id in materials]
-  all_materials = json.load(open('data/mudi.json'))
+  all_materials = json.load(open('data/materials.json'))
   return render_template(
     'recommendations.html', 
     wholesaler=wholesaler_id, 
@@ -34,13 +34,13 @@ def recommendations_wholesaler(wholesaler_id):
 @app.route('/order', methods=['POST'])
 def order_materials():
   data = json.loads(request.data)
+  model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()], [float(x) for x in data["cart"].values()])
   cross_sell_dict, cross_sell_discounts, upsell_quantities, upsell_dis, near_deals, groupment_preds = cross_up(
     {key: float(value) for key, value in data["cart"].items()}, 
     json.loads(data["preds"]), 
     json.loads(data["material_pred_dict"]),
     data["wholesaler"]
     )
-  model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()], [float(x) for x in data["cart"].values()])
   return redirect(url_for('crossup', 
       wholesaler_id=data["wholesaler"],
       cross_sell_dict=cross_sell_dict, 

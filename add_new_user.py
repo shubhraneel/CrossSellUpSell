@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import bisect
+import json
 
 from geopy.distance import great_circle
 
@@ -12,12 +13,16 @@ d2["Distance_in_miles"] = d2["Distance_in_miles"].apply(eval)
 
 d3 = pd.read_csv("data/group_users.csv")
 
+with open("data/wholesalers.json") as f:
+  wholesalers = json.load(f)
+
+
 def add_new(data):
   global dloc
   global d2
   global d3
+  global wholesalers
   
-  print(data)
   wh = int(data["wholesaler"])
   groupment = data["groupment"]
   Lat = float(data["latitude"])
@@ -55,6 +60,9 @@ def add_new(data):
   dloc.to_csv("data/wholesaler_coordinates.csv", index=False)
   d2.to_csv("data/sorted_user_to_user_distance.csv", index=False)
 
-  print(d3.head())
   d3.insert(len(d3.columns), str(wh), [groupment])
   d3.to_csv("data/group_users.csv", index=False)
+
+  bisect.insort(wholesalers, str(wh))
+  with open("data/wholesalers.json", "w+") as f:
+    json.dump(wholesalers, f)

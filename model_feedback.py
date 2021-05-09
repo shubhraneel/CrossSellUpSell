@@ -137,7 +137,7 @@ def model_feedback(wh, materials, HL_ordered):
       x=x_train,
       y=y_train,
       batch_size=64,
-      epochs=40,
+      epochs=20,
       verbose=1,
   )
 
