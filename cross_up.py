@@ -72,15 +72,19 @@ def cross_up(ordered_materials, preds, material_pred_dict, wh):
     #Can change it to today
     latest_date = sorted(dfg[dfg['Wholesaler'] == wh]["Date"].unique())[-1]
 
-  valid_date = str(np.datetime64(latest_date) - 60) #change 60 here for time period in days
+  valid_date = str(np.datetime64(latest_date) - 360) #change 60 here for time period in days
 
 
   materials_bought=[]
   for nearby_users in u[1:L]:
-    print(nearby_users[1])
+    print(type(nearby_users[1]))
     d = dfg[dfg['Wholesaler'] == nearby_users[1]]
 
+    print(latest_date, valid_date)
+
     x = d[(d["Date"]<latest_date) & (d["Date"]>valid_date)]
+
+    print(x)
 
     for i in range(len(x)):
       materials_bought+=x['Materials'].iloc[i]
