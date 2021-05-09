@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<form action="/add_new_user" method="post" class="form-new-user">
+  <div class="mb-3">
+    <label for="material" class="form-label">Wholesaler ID</label>
+    <input type="number" class="form-control" id="wholesaler" name="wholesaler">
+  </div>
+  <div class="mb-3">
+    <label for="groupment" class="form-label">Groupment</label>
+    <input type="text" class="form-control" id="groupment" name="groupment">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="latitude">Latitude</label>
+    <input type="number" class="form-control" id="latitude" step="any" name="latitude">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="longitude">Longitude</label>
+    <input type="number" class="form-control" id="longitude" step="any" name="longitude">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

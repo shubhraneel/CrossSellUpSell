@@ -3,9 +3,26 @@ import pandas as pd
 import json
 from material_recommender import RecommenderNet
 import tensorflow as tf
+import re
 
 d1 = pd.read_csv('data/user_mat_rating_modified_all.csv')
 d1["Trend"] = d1["Trend"].apply(eval)
+
+d_whole = pd.read_csv('data/WholesalerDatewise.csv')
+d_whole["HLs"] = d_whole["HLs"].apply(eval)
+d_whole["Materials"] = d_whole["Materials"].apply(eval)
+wholesalers = d_whole["Wholesaler"].unique()
+
+d_HL = pd.read_csv('data/HLWholesalerMaterialPair.csv')
+d_HL["HLs"] = d_HL["HLs"].apply(eval)
+
+def convert_dates(dates):
+    if len(dates) < 4:
+        return []
+    return [pd.to_datetime(re.search('\'(.*)\'', s)[1]) for s in dates.split(", ")]
+
+d_HL["Dates"] = d_HL["Dates"].apply(convert_dates)
+d_HL["Date Difference"] = d_HL["Date Difference"].apply(eval)
 
 def remove_preeciding_zero(l):
   for i in range(len(l)):
@@ -41,10 +58,11 @@ def cont_z(l):
   else: return ans
 
 
-def model_feedback(wh, materials):
+def model_feedback(wh, materials, HL_ordered):
   global d1
-  print(d1.columns)
-  print(wh, materials)
+  global d_whole
+  global d_HL
+
   for i in materials:
     xoi=d1[(d1["Wholesaler"]==wh) & (d1["Material"]==i)]
     print(xoi)
@@ -130,3 +148,41 @@ def model_feedback(wh, materials):
   d1.to_csv('data/user_mat_rating_modified_all.csv', index=False)
 
 
+  ### WholesalerDatewise.csv #######
+  today = pd.to_datetime("today")
+  order_date = str(today).split()[0]
+
+  x = d_whole[(d_whole["Wholesaler"] == wh) & (d_whole["Date"] == order_date)].index
+  if len(x) > 0:
+    for i, material in enumerate(materials):
+      try:
+        index = d_whole["Materials"][x[0]].index(material)
+        d_whole.at[x[0], "HLs"][index]+=HL_ordered[i]
+      except:
+        d_whole.at[x[0], "Materials"] = d_whole["Materials"][x[0]] + [material]
+        d_whole.at[x[0], "HLs"] = d_whole["HLs"][x[0]] + [HL_ordered[i]]
+
+    # d_whole.at[x[0], "HLs"] = d_whole["HLs"][x[0]] + HL_ordered
+    # d_whole.at[x[0], "Materials"] = d_whole["Materials"][x[0]] + materials
+
+  else:
+    ap = {"Wholesaler": wh, "Date": order_date,
+          "HLs": HL_ordered, "Materials": materials}
+    d_whole = d_whole.append(ap, ignore_index=True)
+  d_whole.to_csv('data/WholesalerDatewise.csv', index=False)
+
+  ####### HLWholesalerMaterialPair.csv ########
+  for i, material in enumerate(materials):
+    x = d_HL[(d_whole["Wholesaler"] == wh) & (d_HL["Material"] == material)].index
+    if len(x) > 0:
+      if d_HL["Dates"][x[0]][-1] == today:
+        d_HL.at[x[0], "HLs"] = d_HL["HLs"][x[0]][:-1] + [d_HL["HLs"][x[0]][-1]+HL_ordered[i]]
+      d_HL.at[x[0], "HLs"] = d_HL["HLs"][x[0]] + [HL_ordered[i]]
+      d_HL.at[x[0], "Dates"] = d_HL["Dates"][x[0]] + [today]
+      d_HL.at[x[0], "Date Difference"] = d_HL["Date Difference"][x[0]][:-1] \
+      + [(today - d_HL["Date Difference"][x[0]][-1]).days, 1]
+    else:
+      ap = {"Wholesaler": wh, "Material": material, "Dates": [today],
+            "HLs": [HL_ordered], "Date Difference": [1]}
+      d_HL = d_HL.append(ap, ignore_index=True)
+  d_HL.to_csv('data/HLWholesalerMaterialPair.csv', index=False)

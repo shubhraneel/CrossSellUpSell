@@ -3,6 +3,7 @@ from material_recommender import predict_material
 from HLpredictor import predict_HL
 from cross_up import cross_up
 from model_feedback import model_feedback
+from add_new_user import add_new
 import json
 
 app = Flask(__name__)
@@ -66,8 +67,14 @@ def crossup(wholesaler_id):
 @app.route("/order_2", methods=["POST"])
 def order_2():
   data = json.loads(request.data)
-  model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()])
+  model_feedback(int(data["wholesaler"]), [int(x) for x in data["cart"].keys()], [int(x) for x in data["cart"].values()])
   return redirect(url_for('index'))
+
+@app.route("/add_new_user", methods=["GET", "POST"])
+def add_new_user():
+  if request.method == "POST":
+    add_new(request.form)
+  return render_template("new_user.html")
 
 if __name__ == '__main__':
   app.run(debug=True)

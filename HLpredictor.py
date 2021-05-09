@@ -33,11 +33,15 @@ def predict_HL(wholesaler, material):
     flag = 0
     for distance, user in distances:
       row = data[(data["Wholesaler"] == user) & (data["Material"] == material)]
-      if len(row) > 0:
+      if len(row) > 0 and len(eval(row.iloc[0]["HLs"])) > 1:
         flag = 1
         break
     if flag == 0:
-      return 4.2
+      row = data[data["Material"] == material]
+      if len(row) > 0:
+        return np.average(row["HLs"].apply(eval).apply(lambda x:x[0]))
+      else:
+        return 4.2
     # list_of_HL = list((data[data["Material"] == material]["HLs"]).apply(eval))
     # list_HL = []
     # for list_of in list_of_HL:

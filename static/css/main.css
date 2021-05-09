@@ -127,3 +127,8 @@ body {
   background-color: #fce38a;
   border-radius: 5px;
 }
+
+.form-new-user {
+  width: 60%;
+  margin: 2rem auto;
+}

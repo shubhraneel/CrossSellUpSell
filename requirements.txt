@@ -11,6 +11,8 @@ Flask==1.1.2
 Flask-SQLAlchemy==2.5.1
 flatbuffers==1.12
 gast==0.3.3
+geographiclib==1.50
+geopy==2.1.0
 google-auth==1.30.0
 google-auth-oauthlib==0.4.4
 google-pasta==0.2.0
