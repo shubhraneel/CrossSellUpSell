@@ -4,6 +4,7 @@ from HLpredictor import predict_HL
 from cross_up import cross_up
 from model_feedback import model_feedback
 from add_new_user import add_new
+from reset import reset
 import json
 
 app = Flask(__name__)
@@ -76,6 +77,11 @@ def add_new_user():
     add_new(request.form)
     return redirect(url_for('index'))
   return render_template("new_user.html")
+
+@app.route("/reset")
+def reset_state():
+  reset()
+  return redirect(url_for("index"))
 
 if __name__ == '__main__':
   app.run(debug=True)
