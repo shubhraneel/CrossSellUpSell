@@ -1,5 +1,7 @@
 # CrossSellUpSell
 
+This project was done for the Cross-Sell/Upsell task of Maverick 2.0, a data science hackathon organized by AB InBev. It is a python Flask app that recommends the products to Cross-Sell or Upsell to wholesalers and with how much quantity. The backend runs a Machine Learning model based on Neural Collaborative Filtering to predict the Upsell/Cross-Sell product and another Machine Learning model based on LSTM time series prediction to predict the quantity of product to sell. The model uses past sales data for training and is constantly updated as new data is available based on the product and quantity chosen by the user.
+
 ## Running Instructions
 
 1. Start virtual environment
